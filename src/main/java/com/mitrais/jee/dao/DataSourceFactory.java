@@ -1,5 +1,7 @@
 package com.mitrais.jee.dao;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
+
 import javax.sql.DataSource;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,8 +12,10 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
-
+/**
+ * Class that provides MYSQL datasource to be used to connect to database
+ * it implements singleton pattern and read the setting properties from resources/database.properties
+ */
 public class DataSourceFactory {
     private final DataSource dataSource;
     private static final Logger LOGGER = Logger.getLogger(DataSourceFactory.class.getName());
@@ -45,10 +49,19 @@ public class DataSourceFactory {
         this.dataSource = mysqlDataSource;
     }
 
+    /**
+     * Get a data source to database
+     *
+     * @return dataSource object
+     * @throws SQLException
+     */
     public static Connection getConnection() throws SQLException {
         return SingletonHelper.INSTANCE.dataSource.getConnection();
     }
 
+    /**
+     * Singleton
+     */
     private static class SingletonHelper {
         private static DataSourceFactory INSTANCE = null;
 

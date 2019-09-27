@@ -22,6 +22,9 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ */
 @WebServlet("/")
 public class StudentsController extends HttpServlet {
 
@@ -62,6 +65,7 @@ public class StudentsController extends HttpServlet {
             e.printStackTrace();
         }
     }
+
     private static List<String> listOfGrade() {
         List<String> gradeList = new ArrayList<>();
         gradeList.add("Freshmen");

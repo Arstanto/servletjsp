@@ -1,5 +1,8 @@
 package com.mitrais.jee.utils;
 
+/**
+ * Class helper
+ */
 public class AppUtils {
     public static String generateNumber(String id) {
         int random = (int) (Math.random() * Math.pow(10, 6));

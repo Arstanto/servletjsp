@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of DAO
+ */
 public class DaoStudentImpl implements StudentDao{
     private DaoStudentImpl() {
     }
