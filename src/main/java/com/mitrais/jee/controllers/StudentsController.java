@@ -1,5 +1,10 @@
 package com.mitrais.jee.controllers;
 
+import com.mitrais.jee.dao.DaoStudentImpl;
+import com.mitrais.jee.dao.StudentDao;
+import com.mitrais.jee.model.Students;
+import com.mitrais.jee.utils.AppUtils;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -18,15 +22,10 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.mitrais.jee.dao.DaoStudentImpl;
-import com.mitrais.jee.dao.StudentDao;
-import com.mitrais.jee.model.Students;
-import com.mitrais.jee.utils.AppUtils;
-
 @WebServlet("/")
 public class StudentsController extends HttpServlet {
 
-    private static final long serVersingUID = 1L;
+    private static final long serVersionUID = 1L;
     private StudentDao studentDao = DaoStudentImpl.getInstance();
     private static final Logger LOGGER = Logger.getLogger(StudentsController.class.getName());
 
@@ -44,7 +43,6 @@ public class StudentsController extends HttpServlet {
                     newForm(req, resp);
                     break;
                 case "/students/insert":
-                    System.out.println("insert");
                     insertStudent(req, resp);
                     break;
                 case "/students/edit":
@@ -72,18 +70,23 @@ public class StudentsController extends HttpServlet {
         return gradeList;
     }
 
+    private static Date setDate() {
+        LocalDate localDate = LocalDate.now();
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
     private void editForm(HttpServletRequest req, HttpServletResponse response) throws SQLException, ServletException, IOException {
         String id = req.getParameter("id");
 
         Optional<Students> existingStudent = studentDao.find(id);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/studentForm.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/studentForm.jsp");
         req.setAttribute("gradeList", listOfGrade());
         existingStudent.ifPresent(s -> req.setAttribute("student", s));
         dispatcher.forward(req, response);
     }
 
     private void newForm(HttpServletRequest req, HttpServletResponse res) throws SQLException, ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/studentForm.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/studentForm.jsp");
         req.setAttribute("gradeList", listOfGrade());
         dispatcher.forward(req, res);
 
@@ -94,17 +97,13 @@ public class StudentsController extends HttpServlet {
         String grade = req.getParameter("grade");
         String balance = req.getParameter("balance");
         String studentId = AppUtils.generateNumber("000");
-        LocalDate localDate = LocalDate.now();
-        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        System.out.println(date);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/YYYY");
-        Students student = new Students(name, grade, Double.parseDouble(balance), studentId, date);
+        Students student = new Students(name, grade, Double.parseDouble(balance), studentId, setDate());
         studentDao.save(student);
         res.sendRedirect("/servletjsp/students");
     }
 
     private void listStudent(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/studentList.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/studentList.jsp");
         List<Students> studentsList = studentDao.findAll();
         req.setAttribute("studentList", studentsList);
         dispatcher.forward(req, resp);
@@ -116,9 +115,7 @@ public class StudentsController extends HttpServlet {
         String grade = req.getParameter("grade");
         String balance = req.getParameter("balance");
         String studentId = req.getParameter("studentId");
-        LocalDate localDate = LocalDate.now();
-        Date modified = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Students students = new Students(id, name, grade, Double.parseDouble(balance), studentId, modified);
+        Students students = new Students(id, name, grade, Double.parseDouble(balance), studentId, setDate());
         studentDao.update(students);
         res.sendRedirect("/servletjsp/students");
     }

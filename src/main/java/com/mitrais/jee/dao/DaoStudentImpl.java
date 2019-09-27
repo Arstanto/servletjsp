@@ -1,12 +1,12 @@
 package com.mitrais.jee.dao;
 
+import com.mitrais.jee.model.Students;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import com.mitrais.jee.model.Students;
 
 public class DaoStudentImpl implements StudentDao{
     private DaoStudentImpl() {
@@ -86,7 +86,6 @@ public class DaoStudentImpl implements StudentDao{
     @Override
     public boolean update(Students students) throws SQLException {
         String sql = "UPDATE students SET name = ?, grade = ?, student_id = ?, balance = ?, modified = ?  WHERE id = ?";
-        System.out.println(students.getGrade());
         boolean rowUpdate = false;
         Connection conn = DataSourceFactory.getConnection();
         PreparedStatement statement = conn.prepareStatement(sql);
