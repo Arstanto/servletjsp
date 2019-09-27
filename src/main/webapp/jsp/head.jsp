@@ -14,3 +14,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.js"></script>
   <![endif]-->
   </head>
+<style>
+.mdl-grid.center-items {
+    justify-content: center;
+}
+.mdl-card__supporting-text {
+    min-height: 300px;
+}
+</style>

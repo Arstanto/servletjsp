@@ -5,12 +5,13 @@
 <!doctype html>
 <html lang="en">
 <%@ include file="head.jsp"%>
+
 <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <%@ include file="menu.jsp"%>
         <main class="mdl-layout__content">
         <div class="page-content">
-        <div class="mdl-grind center-items">
+        <div class="mdl-grid center-items">
             <div class="mdl-cell mdl-cell-4-col">
             <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2p">
                     <tr>

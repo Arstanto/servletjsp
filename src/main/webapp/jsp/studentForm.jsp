@@ -4,16 +4,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@ include file="head.jsp"%>
-<style>
-.mdl-card__supporting-text {
-    min-height: 300px;
-}
-</style>
 <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <%@ include file="menu.jsp"%>
     <div class="page-content">
-        <div class="mdl-grid center-item">
+        <div class="mdl-grid center-items">
             <div class="mdl-cell mdl-cell--4-coll">
                 <div class="mdl-card mdl-shadow--6dp">
                     <div class="mdl-card__title mdl-color-primary mdl-color-text--white">
