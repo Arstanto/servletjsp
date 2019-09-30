@@ -83,14 +83,14 @@ public class StudentsController extends HttpServlet {
         String id = req.getParameter("id");
 
         Optional<Students> existingStudent = studentDao.find(id);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/studentForm.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/jsp/studentForm.jsp");
         req.setAttribute("gradeList", listOfGrade());
         existingStudent.ifPresent(s -> req.setAttribute("student", s));
         dispatcher.forward(req, response);
     }
 
     private void newForm(HttpServletRequest req, HttpServletResponse res) throws SQLException, ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/studentForm.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/jsp/studentForm.jsp");
         req.setAttribute("gradeList", listOfGrade());
         dispatcher.forward(req, res);
 
@@ -107,7 +107,7 @@ public class StudentsController extends HttpServlet {
     }
 
     private void listStudent(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/studentList.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/jsp/studentList.jsp");
         List<Students> studentsList = studentDao.findAll();
         req.setAttribute("studentList", studentsList);
         dispatcher.forward(req, resp);
